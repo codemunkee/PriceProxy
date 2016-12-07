@@ -1,5 +1,7 @@
 package com.russbox;
 
+import com.russbox.resources.HelloWorldResource;
+import com.russbox.resources.PriceResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -23,7 +25,16 @@ public class PriceProxyApplication extends Application<PriceProxyConfiguration> 
     @Override
     public void run(final PriceProxyConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        final HelloWorldResource resource = new HelloWorldResource(
+                configuration.getTemplate(),
+                configuration.getDefaultName()
+        );
+
+        final PriceResource price = new PriceResource();
+
+        environment.jersey().register(resource);
+        environment.jersey().register(price);
+
     }
 
 }
